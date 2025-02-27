@@ -14,3 +14,4 @@ secrets.json
 dist/
 build/
 node_modules/
+staticfiles
