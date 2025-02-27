@@ -23,7 +23,7 @@ You can access the live project here: [Library Management System](https://parthd
 ## Tech Stack
 - **Backend:** Django (Python)
 - **Database:** SQLite
-- **Frontend:** HTML5 (No CSS used)
+- **Frontend:** HTML5, CSS
 - **Deployment:** PythonAnywhere
 
 ## Installation Guide
