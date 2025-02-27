@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Add Book</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'add_book.css' %}">
+  </head>
+  <body>
+    <form method="post">
+      <h2>Add Book</h2>
+      {% csrf_token %}{{ form.as_p }}
+      <button type="submit">Add Book</button>
+      <a href="{% url 'admin_dashboard' %}">Dont want to add</a>
+    </form>
+  </body>
+</html>

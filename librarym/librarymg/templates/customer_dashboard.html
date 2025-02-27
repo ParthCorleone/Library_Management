@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Customer Dashboard</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'customer_dashboard.css' %}">
+  </head>
+  <body>
+    <h2>Welcome, {{ request.user.username }}</h2>
+
+    <h3>Available Books</h3>
+    <ul>
+      {% for book in books %}
+      <li>
+        {{ book.title }} by {{ book.author }} - 
+        Quantity: {{ book.quantity }} - 
+        Status: 
+        {% if book.is_available %}
+          <span class="available">Available</span>
+          <a href="{% url 'request_book' book.id %}">Request Book</a>
+        {% else %}
+          <span class="not-available">Not Available</span>
+        {% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+
+    <h3>Your Issued Books</h3>
+    <ul>
+      {% for issuance in issued_books %}
+      <li>
+        {{ issuance.book.title }} issued on {{ issuance.issued_date|date:"Y-m-d H:i" }} 
+        (Due Date: {{ issuance.due_date|date:"Y-m-d H:i" }})
+        {% if issuance.is_overdue %}
+          <span class="not-available">(Overdue)</span>
+        {% endif %}
+        <a href="{% url 'return_book' issuance.id %}">Return Book</a>
+      </li>
+      {% endfor %}
+    </ul>
+
+    <h3>Notifications</h3>
+    <ul>
+      {% for notification in request.user.notification_set.all %}
+      <li>
+        {{ notification.message }} ({{ notification.created_at|date:"Y-m-d H:i" }})
+        {% if not notification.is_read %}
+          <a href="{% url 'mark_notification_read' notification.id %}">Mark as Read</a>
+        {% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+
+    <br />
+    <a class="logout-link" href="{% url 'logout' %}">Logout</a>
+  </body>
+</html>

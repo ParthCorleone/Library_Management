@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Assigned Tasks</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'view_task.css' %}">
+  </head>
+  <body>
+    <h2>Assigned Tasks</h2>
+    {% if tasks %}
+    <table border="1">
+      <tr>
+        <th>Staff Name</th>
+        <th>Task Description</th>
+        <th>Assigned By</th>
+        <th>Created At</th>
+        <th>Status</th>
+      </tr>
+      {% for task in tasks %}
+      <tr>
+        <td>{{ task.staff.username }}</td>
+        <td>{{ task.task_description }}</td>
+        <td>{{ task.assigned_by.username }}</td>
+        <td>{{ task.created_at }}</td>
+        <td>{{ task.status }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    {% else %}
+    <p>No tasks assigned yet.</p>
+    {% endif %}
+
+    <br />
+    <a href="{% url 'admin_dashboard' %}">Back to Dashboard</a>
+  </body>
+</html>

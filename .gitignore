@@ -1,0 +1,16 @@
+.venv/
+*.pyc
+__pycache__/
+db.sqlite3
+media/
+*.env
+local_settings.py
+secrets.json
+*.log
+.idea/
+.vscode/
+*.swp
+*.swo
+dist/
+build/
+node_modules/

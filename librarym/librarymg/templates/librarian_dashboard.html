@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Librarian Dashboard</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'librarian_dashboard.css' %}">
+  </head>
+  <body>
+    <h2>Welcome Librarian</h2>
+
+    <h3>All Books</h3>
+    <ul>
+      {% for book in books %}
+      <li>
+        {{ book.title }} by {{ book.author }} - 
+        Quantity: {{ book.quantity }} - 
+        Status: {% if book.is_available %}<span class="available">Available</span>{% else %}<span class="not-available">Not Available</span>{% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+
+    <h3>Pending Book Requests</h3>
+    <ul>
+      {% for request in pending_requests %}
+      <li>
+        {{ request.book.title }} requested by {{ request.requested_by.username }} on {{ request.request_date|date:"Y-m-d H:i" }}
+        {% if request.book.is_available %}
+          <a href="{% url 'approve_request' request.id %}">Approve</a>
+        {% else %}
+          <span class="not-available">(Not Available)</span>
+        {% endif %}
+        <a href="{% url 'reject_request' request.id %}">Reject</a>
+      </li>
+      {% endfor %}
+    </ul>
+
+    <h3>Issued Books</h3>
+    <ul>
+      {% for issuance in issued_books %}
+      <li>
+        {{ issuance.book.title }} issued to {{ issuance.issued_to.username }} on {{ issuance.issued_date|date:"Y-m-d H:i" }} 
+        (Due Date: {{ issuance.due_date|date:"Y-m-d H:i" }})
+        {% if issuance.is_overdue and not issuance.returned_date %}
+          <a href="{% url 'send_overdue_notification' issuance.id %}">Send Overdue Notification</a>
+        {% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+
+    <h3>Assign Task to Staff</h3>
+    <a class="button-link" href="{% url 'assign_task' %}">Assign New Task</a>
+    <a class="button-link" href="{% url 'view_task' %}">View Assigned Tasks</a>
+
+    <br /><br />
+    <a class="logout-link" href="{% url 'logout' %}">Logout</a>
+  </body>
+</html>

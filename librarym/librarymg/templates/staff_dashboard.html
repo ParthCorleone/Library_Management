@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Staff Dashboard</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'staff_dashboard.css' %}">
+  </head>
+  <body>
+    <h2>Welcome, {{ request.user.username }}</h2>
+
+    <h3>Tasks to Perform</h3>
+    {% if tasks %}
+    <table>
+      <tr>
+        <th>Task</th>
+        <th>Assigned By</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+      {% for task in tasks %}
+      {% if task.status != 'Done' %}
+      <tr>
+        <td>{{ task.task_description }}</td>
+        <td>{{ task.assigned_by.username }}</td>
+        <td class="not-done">{{ task.status }}</td>
+        <td>
+          <form action="{% url 'mark_task_done' task.id %}" method="POST">
+            {% csrf_token %}
+            <button type="submit">Mark as Done</button>
+          </form>
+        </td>
+      </tr>
+      {% endif %}
+    {% endfor %}    
+    </table>
+    {% else %}
+    <p>No tasks assigned yet.</p>
+    {% endif %}
+
+    <br />
+    <a href="{% url 'logout' %}">Logout</a>
+  </body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Assign Task</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'assign_task.css' %}">    
+  </head>
+  <body>
+    <form method="post">
+      <h2>Assign Task to Staff</h2>
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Assign Task</button>
+      <br>
+      <a class="button-link" href="{% url 'librarian_dashboard' %}">Back to Dashboard</a>
+    </form> 
+  </body>
+</html>
